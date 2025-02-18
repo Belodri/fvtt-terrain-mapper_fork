@@ -66,6 +66,15 @@ function isStandAloneEffect(effect) {
 }
 
 /**
+ * Determines whether a given effect is the active effect representation of one of its own statuses.
+ */
+function isOwnStatus(effect) {
+    return effect.statuses.some(s => 
+        effect._id && effect._id === CONFIG.statusEffects.find(e => e.id === s)?._id
+    )
+}
+
+/**
  * Hook deleteActiveEffect
  * Upon AE deletion, toggle off statuses unless other effects have those statuses.
  * @param {Document} document                       The new Document instance which has been created
@@ -79,7 +88,7 @@ function deleteActiveEffect(document, options, userId) {
 
   const otherEffectStatuses = new Set();
   for ( const effect of actor.allApplicableEffects() ) {
-    if ( isStandAloneEffect(effect) ) continue;
+    if ( isStandAloneEffect(effect) || isOwnStatus(effect) ) continue;
     effect.statuses.forEach(s => otherEffectStatuses.add(s));
   }
 
