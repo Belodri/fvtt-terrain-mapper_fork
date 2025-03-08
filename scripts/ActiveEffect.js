@@ -47,7 +47,7 @@ function preCreateActiveEffect(document, data, options, userId) {
  */
 function createActiveEffect(document, options, userId) {
   const actor = document.parent;
-  if ( !CONFIG[MODULE_ID].addStandAloneAEs || !document.statuses || !isFirstGM || !(actor instanceof Actor) ) return;
+  if ( !CONFIG[MODULE_ID].addStandAloneAEs || !document.statuses || !isFirstGM() || !(actor instanceof Actor) ) return;
   if ( isStandAloneEffect(document) ) return;
 
   const defaultStatusIds = new Set(CONFIG.statusEffects.map(s => s.id));
@@ -83,7 +83,7 @@ function isOwnStatus(effect) {
  */
 function deleteActiveEffect(document, options, userId) {
   const actor = document.parent;
-  if ( !CONFIG[MODULE_ID].addStandAloneAEs || !document.statuses || !isFirstGM || !(actor instanceof Actor) ) return;
+  if ( !CONFIG[MODULE_ID].addStandAloneAEs || !document.statuses || !isFirstGM() || !(actor instanceof Actor) ) return;
   if ( isStandAloneEffect(document) ) return;
 
   const otherEffectStatuses = new Set();
